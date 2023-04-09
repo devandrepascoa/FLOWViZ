@@ -4,7 +4,7 @@ const workflow = {
     isString: { errorMessage: "name must be a String." },
     isLength: {
       errorMessage: "name must be at least 2 characters long.",
-      options: { min: 2, max: 20 },
+      options: { min: 2, max: 100 },
     },
   },
   start_date: {
@@ -16,7 +16,7 @@ const workflow = {
     isString: { errorMessage: "Task id must be a String." },
     isLength: {
       errorMessage: "Task id must be at least 2 characters long.",
-      options: { min: 2, max: 20 },
+      options: { min: 2, max: 100 },
     },
   },
   "tasks.*.action": {

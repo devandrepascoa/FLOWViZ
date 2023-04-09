@@ -22,14 +22,14 @@ const WorkflowSchema = new Schema({
   dag_id: {
     type: String,
     minlength: 3,
-    maxlength: 30,
+    maxlength: 256,
     required: true,
     unique: true,
   },
   description: {
     type: String,
     minlength: 3,
-    maxlength: 50,
+    maxlength: 512,
     required: true,
   },
   username: {
