@@ -31,94 +31,19 @@ You can also customize each task inside the workflow.
 
 Before going into the project's setup, follow this [guide](requirements.md), in order to fulfill all setup's requirements.
 
-# Scripted setup
-
-If you use a **Linux distribution** that use **systemd**, you can easily execute the scripted setup by the following order (provided you have already installed the previously mentioned requirements):
+# Manual setup
 
 1. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first, before going to step 2);
 
-2. Execute `setup.sh`. This script will also copy the default `.env` files from `defaults/`. If you want to deploy the project or add your own values, you **must change** the copied .env files (in `./.env` and `./client/.env`), specially credentials and sensitive information;
-
-3. (**Optional**, requires tmux) Execute `start.sh` to start both client and server in different tmux sessions.
-
-**Note**: **Execute setupAirflow.sh and setup.sh just once**.
-
-# Manual setup
-
-It is advised to follow the setup guide by the displayed order.
-
-## Configuring database
-
-1. Download mongo image
-
-```sh
-docker pull mongo
-```
-
-2. Run and create mongo container, exposing port 27017
-
-```sh
-docker run --name mongodb -d -p 27017:27017 mongo
-```
-
-## Configuring Apache Airflow
-
-1. Configure the Airflow user (inside `airflow/`):
-
-```sh
-echo -e "AIRFLOW_UID=$(id -u)" > .env
-```
-
-2. Install and run the Airflow container, along with the required services by executing the following command inside `airflow/`:
-
-**Note**: older versions require you to write `docker-compose up` instead `docker compose up`, this has now changed with the latest version. Depending on which package you use, both can be support or just one of them; you can also create an [alias](https://www.cyberciti.biz/faq/create-permanent-bash-alias-linux-unix/) (bash tutorial, also compatible with zsh or fish) to better suit your needs. For more information check the head notes [here](https://docs.docker.com/compose/reference/) and [this article](https://www.docker.com/blog/announcing-compose-v2-general-availability/).
-
-```sh
-docker compose up
-```
-
-To check running containers:
-
-```sh
-docker ps
-```
-
-After all services are up and running, Airflow will expose a web client, which is accessible through the 8080 port ([http://localhost:8080](http://localhost:8080)). The default credentials are username: `airflow` and password: `airflow`. After a successful login, you might see a dashboard containing a list of DAG examples.
-
-3. Create a Docker network:
-
-```sh
-docker network create flowviz-docker-network
-```
-
-4. Add **MongoDB container** and **all Airflow containers** to the network (the containers must be running):
-
-```sh
-docker network connect flowviz-docker-network mongodb && \
-for airflowContainer in $(docker ps --format {{.Names}} | grep "airflow-"); \
-do \
-    docker network connect flowviz-docker-network $airflowContainer; \
-done
-```
-
-5. Inspect the assigned IP addresses inside the network (following command) and **retrieve the MongoDB's container IP address**:
-
-```sh
-docker network inspect flowviz-docker-network
-```
-
-Or, simply copy the result of this command (you may need to **reset the container** for this command to work):
-
-```sh
-docker inspect -f '{{with index .NetworkSettings.Networks "flowviz-docker-network"}}{{.IPAddress}}{{end}}' mongodb
-```
+2. Execute `docker compose up`. This will start the server, client and MongoDB containers;
 
 6. Inside the **Apache Airflow web client** ([http://localhost:8080](http://localhost:8080)), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
 
 ```
 Connection Id: mongodb_flowviz
 Connection Type: mongo
-Host: [place the retrieved IP address from the MongoDB's container]
+Host: localhost
+Port: 27017
 ```
 
 7. Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
@@ -128,84 +53,6 @@ Host: [place the retrieved IP address from the MongoDB's container]
 9. Inside the Airflow's dashboard and toggle on the `dag_generator` DAG (switch on the left of the DAG's name).
 
 If everything went well, no errors should be displayed by the client (aka it must not appear that `mongodb_flowviz` connection, used by the dag_generator DAG, is not recognized).
-
-## Add **server**'s dot-env environment variables
-
-1. Create a file called `.env` inside the main folder.
-
-2. Fill it with the variables below (remove the curly brackets and change what is in between them):
-
-```sh
-PRODUCTION={true|false}
-SERVER_NAME={server_name}
-SERVER_PORT={server_port_number}
-DATABASE_ADDRESS={database_address}
-DATABASE_PORT={database_port}
-AIRFLOW_ADDRESS={airflow_address}
-AIRFLOW_PORT={airflow_port}
-AIRFLOW_DAG_GENERATOR={airflow_dag_generator_name}
-JWT_SECRET={jwt_secret}
-AIRFLOW_USERNAME={airflow_username}
-AIRFLOW_PASSWORD={airflow_password}
-```
-
-## Add **client**'s dot-env environment variables
-
-1. Create a file called `.env` inside the `client/` folder.
-
-2. Fill it with the variables below (remove the curly brackets and change what is in between them):
-
-```sh
-REACT_APP_SERVER_PROTOCOL={protocol}
-REACT_APP_SERVER_ADDRESS={server_address}
-REACT_APP_SERVER_PORT={server_port}
-```
-
-## Running on localhost
-
-1. Install npm package dependencies (inside main folder and `client/`):
-
-```sh
-npm i
-```
-
-2. To run both client and server (concurrently dependency, run this command inside the main folder):
-
-```sh
-npm run dev
-```
-
-## Running on localhost **with tmux**
-
-Allows you to isolate each log in a terminal individual session, providing better log visibility than the concurrently way.
-
-1. [Tmux setup (last item)](requirements.md)
-
-2. Execute the start.sh script
-
-**Note**: if there are no execution permissions, execute:
-```sh
-chmod +x start.sh
-```
-
-Start:
-```sh
-./start.sh
-```
-
-## Testing
-
-To run unit tests (main or `client/` folders):
-
-```sh
-npm test
-```
----
-# Documentation
-
-Further documentation about the developed solution can be found in this repository [wiki](https://github.com/mig07/FLOWViZ/wiki), namely the [REST API's endpoints](https://github.com/mig07/FLOWViZ/wiki/HTTP-Server's-REST-API-endpoints).
-
----
 
 # Contacts
 
