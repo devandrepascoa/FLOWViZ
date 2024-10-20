@@ -37,14 +37,16 @@ Before going into the project's setup, follow this [guide](requirements.md), in 
 
 2. Execute `docker compose up`. This will start the server, client and MongoDB containers;
 
-6. Inside the **Apache Airflow web client** ([http://localhost:8080](http://localhost:8080)), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
+6. Inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default credentials are username: `airflow` and password: `airflow`), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
 
-```
-Connection Id: mongodb_flowviz
-Connection Type: mongo
-Host: localhost
-Port: 27017
-```
+    ```
+    Connection Id: mongodb_flowviz
+    Connection Type: mongo
+    Host: localhost
+    Port: 27017
+    ```
+
+    **Save the connection.**
 
 7. Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
 
