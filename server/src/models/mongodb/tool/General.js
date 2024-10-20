@@ -6,7 +6,7 @@ const General = new Schema(
     name: {
       type: String,
       minlength: 3,
-      maxlength: 30,
+      maxlength: 256,
       required: true,
       unique: true,
     },

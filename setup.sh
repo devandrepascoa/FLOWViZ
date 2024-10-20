@@ -1,13 +1,3 @@
-# If docker daemon is off, turns it on.
-startDocker() {
-    if [ $(systemctl is-active docker) != "active" ];
-    then
-        sudo systemctl start docker.service containerd.service
-        echo Starting docker...
-    else
-        echo Docker is active!
-    fi
-}
 
 # Downloads MongoDB's image and creates the container exposing the 27017 port.
 downloadAndCreateMongoContainer() {
@@ -41,7 +31,6 @@ setupFlowviz() {
     fi
 }
 
-startDocker
 downloadAndCreateMongoContainer
 setupDockerNetwork
 setupFlowviz
