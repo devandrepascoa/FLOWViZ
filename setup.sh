@@ -1,3 +1,11 @@
+# Check if Docker is running, if not exit the script
+checkDocker() {
+    if ! docker info >/dev/null 2>&1; then
+        echo "Error: Docker is not running. Please start Docker first."
+        exit 1
+    fi
+    echo "Docker is running!"
+}
 
 # Downloads MongoDB's image and creates the container exposing the 27017 port.
 downloadAndCreateMongoContainer() {
@@ -31,6 +39,16 @@ setupFlowviz() {
     fi
 }
 
+echo "Checking Docker..."
+checkDocker
+
+echo "Setting up MongoDB..."
 downloadAndCreateMongoContainer
+
+echo "Setting up Docker network..."
 setupDockerNetwork
+
+echo "Setting up Flowviz..."
 setupFlowviz
+
+echo "Setup completed!"
