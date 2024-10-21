@@ -55,7 +55,7 @@ npm install
 
     **Save the connection.**
 
-5. Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
+5. In the airflow folder, Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
 
 6. Also, copy the dag_template.py script into the include/ folder (in the same directory).
 
