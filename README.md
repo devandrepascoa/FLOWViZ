@@ -33,11 +33,18 @@ Before going into the project's setup, follow this [guide](requirements.md), in 
 
 # Manual setup
 
-1. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first, before going to step 2);
+1. npm install server and client dependencies:
 
-2. Execute `docker compose up`. This will start the server, client and MongoDB containers;
+```bash
+npm install
+cd client
+npm install
+```
+2. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first, before going to step 2);
 
-6. Inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default credentials are username: `airflow` and password: `airflow`), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
+3. Execute `docker compose up`. This will start the server, client and MongoDB containers;
+
+4. Inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default credentials are username: `airflow` and password: `airflow`), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
 
     ```
     Connection Id: mongodb_flowviz
@@ -48,11 +55,14 @@ Before going into the project's setup, follow this [guide](requirements.md), in 
 
     **Save the connection.**
 
-7. Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
+5. Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
 
-8. Also, copy the dag_template.py script into the include/ folder (in the same directory).
+6. Also, copy the dag_template.py script into the include/ folder (in the same directory).
 
-9. Inside the Airflow's dashboard and toggle on the `dag_generator` DAG (switch on the left of the DAG's name).
+7. Inside the Airflow's dashboard and toggle on the `dag_generator` DAG (switch on the left of the DAG's name).
+
+8. Register flowviz account at http://localhost:4000/flowviz with username admin and password admin
+
 
 If everything went well, no errors should be displayed by the client (aka it must not appear that `mongodb_flowviz` connection, used by the dag_generator DAG, is not recognized).
 

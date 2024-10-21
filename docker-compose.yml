@@ -9,15 +9,16 @@ services:
       - PRODUCTION=true
       - SERVER_NAME=FLOWViZ server
       - SERVER_PORT=3000
-      - DATABASE_ADDRESS=mongodb
+      - DATABASE_ADDRESS=localhost
       - DATABASE_PORT=27017
-      - AIRFLOW_ADDRESS=host.docker.internal
+      - AIRFLOW_ADDRESS=localhost
       - AIRFLOW_PORT=8080
       - AIRFLOW_DAG_GENERATOR=dag_generator
       - JWT_SECRET=thisismysecret
       - AIRFLOW_USERNAME=airflow
       - AIRFLOW_PASSWORD=airflow
     command: npm run server
+    network_mode: host
     ports:
       - "3000:3000"
     depends_on:
@@ -34,6 +35,7 @@ services:
       - REACT_APP_SERVER_ADDRESS=localhost
       - REACT_APP_SERVER_PORT=3000
     command: npm start
+    network_mode: host
     ports:
       - "4000:4000"
 
@@ -42,6 +44,7 @@ services:
     restart: always
     volumes:
       - flowviz_mongo_data:/data/db
+    network_mode: host
     ports:
       - '27017:27017'
 

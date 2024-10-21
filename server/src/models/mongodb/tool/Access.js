@@ -5,7 +5,7 @@ const DockerVolume = new Schema(
   {
     source: { type: String, maxlength: 256 },
     target: { type: String, maxlength: 256 },
-    _type: { type: String, enum: ["bind"], default: "bind" },
+    _type: { type: String, enum: ["bind", "volume"], default: "bind" },
   },
   { _id: false }
 );
