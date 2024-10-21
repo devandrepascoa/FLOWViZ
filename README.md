@@ -17,34 +17,42 @@ contract where you specify the tool's access, rules and guidelines.
 
 The integrated tools can then be used to build your own customized workflows.
 
-![flowviz-whiteboard](/docs/pictures/flowviz-whiteboard.png)
+![flowviz-whiteboard](./docs/pictures/flowviz-whiteboard.png)
 
 You can also customize each task inside the workflow.
 
-![flowviz-task-setup](/docs/pictures/individualTaskSetup.png)
+![flowviz-task-setup](./docs/pictures/individualTaskSetup.png)
 
 # Setup requirements
 
- - Docker
- - Node.JS
- - Tmux (optional)
+- Docker
+- Node.JS
+- Tmux (optional)
 
-Before going into the project's setup, follow this [guide](requirements.md), in order to fulfill all setup's requirements.
+Before going into the project's setup, follow this [guide](requirements.md), in order to fulfill all setup's
+requirements.
 
 # Manual setup
 
 1. npm install server and client dependencies:
 
-```bash
-npm install
-cd client
-npm install
-```
-2. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first, before going to step 2);
+   ```bash
+   npm install
+   cd client
+   npm install
+   ```
+
+2. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first,
+   before going to step 2);
 
 3. Execute `docker compose up -d`. This will start the server, client and MongoDB containers;
 
-4. Inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default credentials are username: `airflow` and password: `airflow`), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
+4. Go inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default
+   credentials
+   are username: `airflow` and password: `airflow`).
+
+   Using the **NavBar** go to **Admin** and then **Connections**.
+   Click **add a new record** (plus icon) and fill the displayed fields with the following information:
 
     ```
     Connection Id: mongodb_flowviz
@@ -53,18 +61,31 @@ npm install
     Port: 27017
     ```
 
-    **Save the connection.**
+   **Save the connection.**
 
-5. In the airflow folder, Copy the dag_generator.py script into the dags/ folder (must be in the same directory where the docker-compose.yaml is).
+5. Go inside the `airflow` folder (e.g. `cd airflow`).
 
-6. Also, copy the dag_template.py script into the include/ folder (in the same directory).
+   Inside, you should have a `dags` folder and an `include` folder.
 
-7. Inside the Airflow's dashboard and toggle on the `dag_generator` DAG (switch on the left of the DAG's name).
+    * Copy the dag_generator.py script into the `dags` folder.
+       ```bash
+       sudo cp dag_generator.py dags/
+       ```
+    * Copy the dag_template.py script into the `include` folder.
+      ```bash
+      sudo cp dag_template.py include/
+      ```
 
-8. Register flowviz account at http://localhost:4000/flowviz with username admin and password admin
+   *Applying the copy with `sudo` might be necessary, depending on the permissions of the `dags` and `include` folders.*
+   <br><br>
 
+6. Inside Airflow's dashboard (http://localhost:8080/home), ensure the `dag_generator` DAG is toggled (switch on the
+   left of the DAG's name).
 
-If everything went well, no errors should be displayed by the client (aka it must not appear that `mongodb_flowviz` connection, used by the dag_generator DAG, is not recognized).
+7. **Register a new** flowviz account at http://localhost:4000/flowviz with username `admin` and password `admin`
+
+If everything went well, no errors should be displayed by the client (aka it must not appear that `mongodb_flowviz`
+connection, used by the dag_generator DAG, is not recognized).
 
 # Contacts
 
@@ -75,10 +96,16 @@ Source code repository - [https://github.com/mig07/FLOWViZ](https://github.com/m
 
 # Acknowledgements
 
-This project was developed under the context of a [Lisbon School of Engineering (ISEL)](https://www.isel.pt/) Master's degree final project, which was also funded by student grants, as follows:
-- NGPHYLO PTDC/CCI-BIO/29676/2017, an [INESC-ID](https://www.inesc-id.pt/) project, funded by [Science and Technology Foundation (FCT)](https://www.fct.pt/);
+This project was developed under the context of a [Lisbon School of Engineering (ISEL)](https://www.isel.pt/) Master's
+degree final project, which was also funded by student grants, as follows:
+
+- NGPHYLO PTDC/CCI-BIO/29676/2017, an [INESC-ID](https://www.inesc-id.pt/) project, funded
+  by [Science and Technology Foundation (FCT)](https://www.fct.pt/);
 - IPL/ISEL/DIVA_ISEL, funded by [Polytechnic Institute of Lisbon (IPL)](https://www.ipl.pt/).
 
 The following articles were also submitted under the context of this project:
-- [https://inforum.org.pt/sites/default/files/2022-09/Actas_INForum.pdf#page=224](https://inforum.org.pt/sites/default/files/2022-09/Actas_INForum.pdf#page=224), single-column format, submitted and publicly presented at the [INForum 2022 conference](https://inforum.org.pt/), which took place at the [Polytechnic Institute of Guarda (IPG)](http://politecnicoguarda.pt/);
+
+- [https://inforum.org.pt/sites/default/files/2022-09/Actas_INForum.pdf#page=224](https://inforum.org.pt/sites/default/files/2022-09/Actas_INForum.pdf#page=224),
+  single-column format, submitted and publicly presented at the [INForum 2022 conference](https://inforum.org.pt/),
+  which took place at the [Polytechnic Institute of Guarda (IPG)](http://politecnicoguarda.pt/);
 - [https://arxiv.org/abs/2211.15282](https://arxiv.org/abs/2211.15282), two-column format.
