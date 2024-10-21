@@ -49,7 +49,7 @@ npm install
     ```
     Connection Id: mongodb_flowviz
     Connection Type: mongo
-    Host: localhost
+    Host: 172.17.0.1
     Port: 27017
     ```
 
