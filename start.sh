@@ -2,14 +2,17 @@
 
 # This scripts assumes that you have: tmux installed and a mongodb container called 'mongodb'
 
-# If docker daemon is off, turns it on
-if [ $(systemctl is-active docker) != "active" ];
-then
-    sudo systemctl start docker.service containerd.service
-    echo Starting docker...
-else
-    echo Docker is active!
-fi
+# Check if Docker is running, if not exit the script
+checkDocker() {
+    if ! docker info >/dev/null 2>&1; then
+        echo "Error: Docker is not running. Please start Docker first."
+        exit 1
+    fi
+    echo "Docker is running!"
+}
+
+echo "Checking Docker..."
+checkDocker
 
 session=flowviz
 

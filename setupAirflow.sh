@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Check if Docker is running, if not exit the script
 checkDocker() {
