@@ -57,7 +57,7 @@ requirements.
     ```
     Connection Id: mongodb_flowviz
     Connection Type: mongo
-    Host: 172.17.0.1
+    Host: host.docker.internal
     Port: 27017
     ```
 
