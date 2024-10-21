@@ -42,7 +42,7 @@ npm install
 ```
 2. Execute `setupAirflow.sh`. Make sure Airflow has all its services running, including the Web server (access it first, before going to step 2);
 
-3. Execute `docker compose up`. This will start the server, client and MongoDB containers;
+3. Execute `docker compose up -d`. This will start the server, client and MongoDB containers;
 
 4. Inside the **Apache Airflow web client** in [http://localhost:8080](http://localhost:8080) (The default credentials are username: `airflow` and password: `airflow`), using the **NavBar** go to **Admin** and then **Connections**. Click **add a new record** (plus icon) and fulfill the displayed fields with the following information:
 
